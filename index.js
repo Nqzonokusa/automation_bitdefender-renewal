@@ -32,6 +32,7 @@ const puppeteer = require('puppeteer-core');
     await page.type('#password_strong_input', password);
     
     // Click checkbox for terms and conditions
+    await page.waitForSelector('#signup-terms-checkbox:enabled'); // Wait for the checkbox to be enabled
     await page.click('#signup-terms-checkbox');
     // Click the submit button
     //await page.click('#submit-create');
