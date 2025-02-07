@@ -30,8 +30,9 @@ const puppeteer = require('puppeteer-core');
     await page.waitForSelector('#password_strong_input');
     await page.type('#password_strong_input', 'password.');
     
+    // Click checkbox for terms and conditions
+    await page.click('#signup-terms-checkbox');
 
-
-    await browser.close();
+    //await browser.close();
 })();
 
