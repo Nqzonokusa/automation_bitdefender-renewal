@@ -1,5 +1,3 @@
-// Script Name: {katalon}
-
 const puppeteer = require('puppeteer-core');
 
 (async () => {
@@ -25,13 +23,16 @@ const puppeteer = require('puppeteer-core');
     await page.type('#first_name_input', 'test');
 
     await page.waitForSelector('#email_address_strong');
-    await page.type('#email_address_strong', 'test' + 'gmail.com');
+    await page.type('#email_address_strong', 'test' + '@gmail.com');
 
     await page.waitForSelector('#password_strong_input');
     await page.type('#password_strong_input', 'password.');
     
     // Click checkbox for terms and conditions
     await page.click('#signup-terms-checkbox');
+
+    // Click the submit button
+    await page.click('#submit-create');
 
     //await browser.close();
 })();
