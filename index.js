@@ -15,6 +15,11 @@ const puppeteer = require('puppeteer-core');
     // Navigate the page to a URL
     await page.goto(`https://www.bitdefender.com/en-us/consumer/fragments/trial`, { waitUntil: 'networkidle0' });
 
+    // Select the free trial button
+    await page.click('a[title="Start your free trial"]');
+    // Wait for the page to load
+    await page.waitForNavigation();
+
     await browser.close();
 })();
 
