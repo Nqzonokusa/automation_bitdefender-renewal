@@ -12,7 +12,7 @@ const fs = require('fs');
     const page = await browser.newPage();
     const firstName = generateRandomName(); // Make firstName a fixed value
     const email = firstName + '@gmail.com';
-    const password = 'password.';
+    const password = 'Password.';
 
     // Navigate the page to a URL
     await page.goto(`https://www.bitdefender.com/en-us/consumer/fragments/trial`, { waitUntil: 'networkidle0' });
@@ -34,14 +34,18 @@ const fs = require('fs');
 
     // Click checkbox for terms and conditions
     await page.waitForSelector('#signup-terms-checkbox:enabled'); // Wait for the checkbox to be enabled
-    await page.click('#signup-terms-checkbox');
-    // Click the submit button
-    //await page.click('#submit-create');
+    page.$eval(`#signup-terms-checkbox`, element => element.click());
 
-    //await browser.close();
+    // Click the submit button
+    await page.click('#submit-create');
 
     // Save the email and password to a file
     saveToFile(email, password);
+
+    // Wait for the page to load
+    await page.waitForNavigation({ waitUntil: 'load' });
+
+    await browser.close();
 
 })();
 
@@ -57,9 +61,9 @@ function generateRandomName() {
 
 function saveToFile(email, password) {
     fs.appendFile('details.txt',
-        'Email: ' + email +
+        '\n\nEmail: ' + email +
         '\nPassword: ' + password, (err) => {
             if (err) throw err;
             console.log('Data has been written to the file');
-        }); 
+        });
 }
