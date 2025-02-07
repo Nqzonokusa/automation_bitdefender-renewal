@@ -20,10 +20,10 @@ const puppeteer = require('puppeteer-core');
 
     // Fill in the form
     await page.waitForSelector('#first_name_input');
-    await page.type('#first_name_input', 'test');
+    await page.type('#first_name_input', generateRandomName() + ' ' + generateRandomName());
 
     await page.waitForSelector('#email_address_strong');
-    await page.type('#email_address_strong', 'test' + '@gmail.com');
+    await page.type('#email_address_strong', generateRandomName() + '@gmail.com');
 
     await page.waitForSelector('#password_strong_input');
     await page.type('#password_strong_input', 'password.');
@@ -32,8 +32,17 @@ const puppeteer = require('puppeteer-core');
     await page.click('#signup-terms-checkbox');
 
     // Click the submit button
-    await page.click('#submit-create');
+    //await page.click('#submit-create');
 
     //await browser.close();
 })();
 
+function generateRandomName() {
+    const num = 8;
+        let res = '';
+        for (let i = 0; i < num; i++) {
+            const random = Math.floor(Math.random() * 26);
+            res += String.fromCharCode(97 + random);
+        };
+        return res;
+}
