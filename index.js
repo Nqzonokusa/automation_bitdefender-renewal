@@ -9,7 +9,8 @@ const puppeteer = require('puppeteer-core');
             args: ['--start-maximized']
         });
     const page = await browser.newPage();
-
+    const firstName = generateRandomName(); // Make firstName a fixed value
+    
     // Navigate the page to a URL
     await page.goto(`https://www.bitdefender.com/en-us/consumer/fragments/trial`, { waitUntil: 'networkidle0' });
 
@@ -20,10 +21,10 @@ const puppeteer = require('puppeteer-core');
 
     // Fill in the form
     await page.waitForSelector('#first_name_input');
-    await page.type('#first_name_input', generateRandomName() + ' ' + generateRandomName());
+    await page.type('#first_name_input', firstName + ' ' + generateRandomName());
 
     await page.waitForSelector('#email_address_strong');
-    await page.type('#email_address_strong', generateRandomName() + '@gmail.com');
+    await page.type('#email_address_strong', firstName + '@gmail.com');
 
     await page.waitForSelector('#password_strong_input');
     await page.type('#password_strong_input', 'password.');
