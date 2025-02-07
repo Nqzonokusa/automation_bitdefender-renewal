@@ -20,6 +20,18 @@ const puppeteer = require('puppeteer-core');
     // Wait for the page to load
     await page.waitForNavigation();
 
+    // Fill in the form
+    await page.waitForSelector('#first_name_input');
+    await page.type('#first_name_input', 'test');
+
+    await page.waitForSelector('#email_address_strong');
+    await page.type('#email_address_strong', 'test' + 'gmail.com');
+
+    await page.waitForSelector('#password_strong_input');
+    await page.type('#password_strong_input', 'password.');
+    
+
+
     await browser.close();
 })();
 
