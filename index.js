@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer-core');
+const fs = require('fs');
 
 (async () => {
     const browser = await puppeteer.launch(
@@ -30,7 +31,7 @@ const puppeteer = require('puppeteer-core');
 
     await page.waitForSelector('#password_strong_input');
     await page.type('#password_strong_input', password);
-    
+
     // Click checkbox for terms and conditions
     await page.waitForSelector('#signup-terms-checkbox:enabled'); // Wait for the checkbox to be enabled
     await page.click('#signup-terms-checkbox');
@@ -38,14 +39,27 @@ const puppeteer = require('puppeteer-core');
     //await page.click('#submit-create');
 
     //await browser.close();
+
+    // Save the email and password to a file
+    saveToFile(email, password);
+
 })();
 
 function generateRandomName() {
     const num = 8;
-        let res = '';
-        for (let i = 0; i < num; i++) {
-            const random = Math.floor(Math.random() * 26);
-            res += String.fromCharCode(97 + random);
-        };
-        return res;
+    let res = '';
+    for (let i = 0; i < num; i++) {
+        const random = Math.floor(Math.random() * 26);
+        res += String.fromCharCode(97 + random);
+    };
+    return res;
+}
+
+function saveToFile(email, password) {
+    fs.appendFile('details.txt',
+        'Email: ' + email +
+        '\nPassword: ' + password, (err) => {
+            if (err) throw err;
+            console.log('Data has been written to the file');
+        }); 
 }
