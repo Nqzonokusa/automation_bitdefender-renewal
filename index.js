@@ -9,10 +9,11 @@ const fs = require('fs');
             defaultViewport: { width: 1920, height: 1080 },
             args: ['--start-maximized']
         });
+
     const page = await browser.newPage();
     const firstName = generateRandomName(); // Make firstName a fixed value
     const email = firstName + '@gmail.com';
-    const password = 'Password.';
+    const password = 'Hatdog123.'; //! CHANGE TO RANDOM BEFORE COMMIT !//
 
     // Navigate the page to a URL
     await page.goto(`https://www.bitdefender.com/en-us/consumer/fragments/trial`, { waitUntil: 'networkidle0' });
@@ -42,18 +43,47 @@ const fs = require('fs');
     // Save the email and password to a file
     saveToFile(email, password);
 
-    // Wait for the page to load
     await page.waitForNavigation({ waitUntil: 'load' });
 
-    await browser.close();
+    const url = page.url();
+
+    // if too many create account, url will lead to a different page
+    if (url.includes('activatefirst.html')) {
+        await page.waitForSelector("xpath//html/body/ui-view/div/main/div/div[1]/ui-view/section/div[4]/div/div[1]/span");
+        await page.click("xpath//html/body/ui-view/div/main/div/div[1]/ui-view/section/div[4]/div/div[1]/span");
+
+        //await page.waitForNavigation({ waitUntil: 'load' });
+
+        await page.waitForSelector('#username');
+        await page.type('#username', email);
+
+        await page.click('#login-next');
+
+        await page.waitForSelector('#password_input');
+        await page.type('#password_input', password);
+
+        await page.click('#password-sign-in')
+
+    };
+    
+    // Wait for the page to load
+    //await page.waitForNavigation({ waitUntil: 'load' });
+
+    //await browser.close();
 
 })();
 
 function generateRandomName() {
     const num = 8;
     let res = '';
+    
     for (let i = 0; i < num; i++) {
+        // Generates a random number between 0 and 25
+        // 26 letters in the alphabet
         const random = Math.floor(Math.random() * 26);
+
+        // 97 to 122 is the ascii range for lowercase letters
+        // 122 is the total derived from the 26 above (97 + 26)
         res += String.fromCharCode(97 + random);
     };
     return res;
